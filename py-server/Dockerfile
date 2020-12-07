@@ -1,9 +1,10 @@
-FROM python as builder
+FROM alpine:latest
 
-COPY build_py/ /src
-RUN pip install -r /src/requirements.txt && \
-    pyinstaller --onefile /src/my_service.py
+COPY build_py/ /py_web_service
+RUN apk update && \
+    apk add python3 py-pip && \ 
+    pip install -r /py_web_service/requirements.txt
 
-FROM ubuntu  
-COPY --from=builder /dist/my_service /py_web_service/my_service
-ENTRYPOINT ["/py_web_service/my_service"]
+
+ENTRYPOINT ["python3", "/py_web_service/my_service.py"]
+CMD ["5000"]

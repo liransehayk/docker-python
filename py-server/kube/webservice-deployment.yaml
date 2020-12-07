@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webservice-deployment
+  labels:
+    app: service-py
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-py
+  template:
+    metadata:
+      labels:
+        app: service-py
+    spec:
+      containers:
+      - name: pyservice
+        image: pyservice
+        ports:
+        - containerPort: 5000
+        env:
+        - name: redis-host
+          value: "redis-service"
+        - name: redis-db
+          value: "0"
+        - name: redis-port
+          value: "6379"

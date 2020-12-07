@@ -47,7 +47,7 @@ if __name__ == '__main__':
         if sock.connect_ex(('127.0.0.1', port)) == 0:
             print('Port {0} is already in use, exiting...'.format(port))
             sys.exit(1)
-    r = redis.Redis(host=os.environ['redis-host'], port=os.environ['port'], db=os.environ['redis-db'])
+    r = redis.Redis(host=os.environ['redis-host'], port=os.environ['redis-port'], db=os.environ['redis-db'])
     if r.exists('counter') == 0:
         r.set('counter', 0)
     app.run(host= '0.0.0.0',port=port)
